@@ -1,2 +1,2 @@
 # Critik
-A resteruant review system for both critics and users
+A hiking trail webstie for beginners and advanced hobbists alike!
