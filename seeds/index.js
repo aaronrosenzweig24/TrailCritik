@@ -1,36 +1,36 @@
 const mongoose = require('mongoose');
 const cities = require('./cities');
-const { places, descriptors } = require('./seedHelpers');
-const Campground = require('../models/campground');
+const { places, descriptors } = require('./seedHelpers')
+const Trail = require('../models/trails');
 
-mongoose.connect('mongodb://localhost:27017/yelp-camp', {
+
+mongoose.connect('mongodb://localhost:27017/trails-critik', {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true
-});
+})
 
-const db = mongoose.connection;
-
+const db = mongoose.connection; //shortening code for easier readability
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
     console.log("Database connected");
 });
 
-const sample = array => array[Math.floor(Math.random() * array.length)];
+const sample = (array) => array[Math.floor(Math.random() * array.length)]
 
 
-const seedDB = async () => {
-    await Campground.deleteMany({});
-    for (let i = 0; i < 50; i++) {
+const seedDB = async() => {
+    await Trail.deleteMany({}); // begin by deleting trails
+    for (let i = 0; i < 50; i++) { // make random 50 trails with unique city/state/descriptors
         const random1000 = Math.floor(Math.random() * 1000);
-        const camp = new Campground({
+        const trail = new Trail({
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             title: `${sample(descriptors)} ${sample(places)}`
         })
-        await camp.save();
+        await trail.save();
     }
 }
 
 seedDB().then(() => {
-    mongoose.connection.close();
-})
+    mongoose.connection.close()
+});
