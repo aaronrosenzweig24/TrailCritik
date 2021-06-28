@@ -1,14 +1,39 @@
 <% layout('layouts/boilerplate') %>
-    <h1>New Trail</h1>
-    <form action="/trails" method="POST">
-        <div>
-            <label for="title">Title</label>
-            <input type="text" id="title" name="trail[title]">
+    <div class="row">
+        <h1 class="text-center">New Trail </h1>
+        <div class="col-6 offset-3">
+
+            <form action="/trails" method="POST">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" name="trail[title]">
+                </div>
+                <div class="mb-3">
+                    <label for="location" class="form-label">Location</label>
+                    <input type="text" id="location" class="form-control" name="trail[location]">
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Image Url</label>
+                    <input type="text" id="image" class="form-control" name="trail[image]">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="price">Trail Price:</label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input type="text" id="price" class="form-control" placeholder="0.00" aria-label="price" aria-describedby="price-label" name="trail[price]">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea type="text" id="description" class="form-control" name="trail[description]"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <button class="btn btn-success">Add Trail</button>
+                </div>
+
+            </form>
+            <a href="/trails">All Trails</a>
         </div>
-        <div>
-            <label for="Location">Location</label>
-            <input type="text" id="location" name="trail[location]">
-        </div>
-        <button>Add Trail</button>
-    </form>
-    <a href="/trails">All Trails</a>
+
+    </div>
