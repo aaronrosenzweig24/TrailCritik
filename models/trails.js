@@ -3,8 +3,10 @@ const Schema = mongoose.Schema;
 
 const TrailCritikSchema = new Schema({
     title: String,
+    image: String,
     description: String,
-    location: String
+    location: String,
+    price: Number
 });
 
 module.exports = mongoose.model('trails', TrailCritikSchema)
