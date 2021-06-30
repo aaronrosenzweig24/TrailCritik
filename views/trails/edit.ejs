@@ -3,29 +3,44 @@
     <div class="row">
         <h1 class="text-center">Edit Trail </h1>
         <div class="col-6 offset-3">
-            <form action="/trails/<%=trail._id%>?_method=PUT" method="POST">
+            <form action="/trails/<%=trail._id%>?_method=PUT" method="POST" novalidate class="validatedForm">
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
-                    <input type="text" class="form-control" id="title" name="trail[title]" value="<%= trail.title %>">
+                    <input type="text" class="form-control" id="title" name="trail[title]" value="<%= trail.title %>" required>
+                    <div class="valid-feedback">
+                        Looks Good!
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="location" class="form-label">Location</label>
-                    <input type="text" id="location" class="form-control" name="trail[location]" value="<%= trail.location %>">
+                    <input type="text" id="location" class="form-control" name="trail[location]" value="<%= trail.location %>" required>
+                    <div class="valid-feedback">
+                        Looks Good!
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="image" class="form-label">Image Url</label>
-                    <input type="text" id="image" class="form-control" name="trail[image]" value="<%= trail.image %>">
+                    <input type="text" id="image" class="form-control" name="trail[image]" value="<%= trail.image %>" required>
+                    <div class="valid-feedback">
+                        Looks Good!
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="price">Trail Price:</label>
                     <div class="input-group">
                         <span class="input-group-text">$</span>
-                        <input type="text" id="price" class="form-control" placeholder="0.00" aria-label="price" aria-describedby="price-label" name="trail[price]" value="<%= trail.price %>">
+                        <input type="text" id="price" class="form-control" placeholder="0.00" aria-label="price" aria-describedby="price-label" name="trail[price]" value="<%= trail.price %>" required>
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
-                    <textarea type="text" id="description" class="form-control" name="trail[description]"><%=trail.description%></textarea>
+                    <textarea type="text" id="description" class="form-control" required name="trail[description]"><%=trail.description%></textarea>
+                    <div class="valid-feedback">
+                        Looks Good!
+                    </div>
                 </div>
 
                 <div class="mb-3">

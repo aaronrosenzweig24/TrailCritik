@@ -37,9 +37,13 @@ app.get('/trails/new', (req, res) => {
     res.render('trails/new')
 })
 app.post('/trails', async(req, res) => {
-    const trail = new Trail(req.body.trail);
-    await trail.save();
-    res.redirect(`/trails/${trail._id}`)
+    try {
+        const trail = new Trail(req.body.trail);
+        await trail.save();
+        res.redirect(`/trails/${trail._id}`)
+    } catch (e) {
+        next(e)
+    }
 })
 app.get('/trails/:id', async(req, res) => {
     const trail = await Trail.findById(req.params.id)
@@ -63,6 +67,9 @@ app.delete('/trails/:id', async(req, res) => {
     res.redirect('/trails')
 })
 
+app.use((err, req, res, next) => {
+    res.send('Something went wrong')
+})
 
 app.listen(3000, () => {
     console.log('Serving on port 3000')
