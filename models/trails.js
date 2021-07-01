@@ -6,7 +6,11 @@ const TrailCritikSchema = new Schema({
     image: String,
     description: String,
     location: String,
-    price: Number
+    price: Number,
+    reviews: [{
+        type: Schema.Types.ObjectID,
+        ref: 'Review'
+    }]
 });
 
 module.exports = mongoose.model('trails', TrailCritikSchema)
