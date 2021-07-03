@@ -3,7 +3,7 @@ const router = express.Router();
 const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/ExpressError')
 const Trail = require('../models/trails');
-const { trailSchema, reviewSchema } = require('../schemas.js')
+const { trailSchema } = require('../schemas.js')
 
 const validateTrail = (req, res, next) => {
     const { error } = trailSchema.validate(req.body);
