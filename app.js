@@ -5,10 +5,12 @@ const ejsMate = require('ejs-mate');
 const { trailSchema, reviewSchema } = require('./schemas.js')
 const catchAsync = require('./utils/catchAsync');
 const methodOverride = require('method-override');
-const Trail = require('./models/trails');
 const ExpressError = require('./utils/ExpressError');
 const { join } = require('path');
-const Review = require('./models/review')
+const Review = require('./models/review');
+const Trail = require('./models/trails');
+
+const trails = require('./routes/trails')
 
 mongoose.connect('mongodb://localhost:27017/trails-critik', {
     useNewUrlParser: true,
@@ -31,16 +33,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
 
-const validateTrail = (req, res, next) => {
-    const { error } = trailSchema.validate(req.body);
-    if (error) {
-        const msg = error.details.map(el => el.message).join(',')
-        throw new ExpressError(msg, 400);
-    } else {
-        next()
-    }
 
-}
 
 const validateReview = (req, res, next) => {
     const { error } = reviewSchema.validate(req.body);
@@ -52,45 +45,12 @@ const validateReview = (req, res, next) => {
     }
 }
 
+app.use("/trails", trails);
+
 
 app.get('/', (req, res) => {
     res.render('home')
 })
-app.get('/trails', catchAsync(async(req, res) => {
-    const trails = await Trail.find({});
-    res.render('trails/index', { trails })
-}))
-app.get('/trails/new', (req, res) => {
-    res.render('trails/new')
-})
-app.post('/trails', validateTrail, catchAsync(async(req, res) => {
-    const trail = new Trail(req.body.trail);
-    await trail.save();
-    res.redirect(`/trails/${trail._id}`)
-
-}))
-app.get('/trails/:id', catchAsync(async(req, res) => {
-    const trail = await Trail.findById(req.params.id).populate('reviews');
-
-    res.render('trails/show', { trail });
-}))
-
-app.get('/trails/:id/edit', catchAsync(async(req, res) => {
-    const trail = await Trail.findById(req.params.id)
-    res.render('trails/edit', { trail });
-}))
-
-app.put('/trails/:id', validateTrail, catchAsync(async(req, res) => {
-    const { id } = req.params;
-    const trail = await Trail.findByIdAndUpdate(id, {...req.body.trail })
-    res.redirect(`/trails/${trail._id}`)
-}))
-
-app.delete('/trails/:id', catchAsync(async(req, res) => {
-    const { id } = req.params;
-    await Trail.findByIdAndDelete(id);
-    res.redirect('/trails')
-}))
 
 app.post('/trails/:id/reviews', validateReview, catchAsync(async(req, res) => {
     const trail = await Trail.findById(req.params.id);
