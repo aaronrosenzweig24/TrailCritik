@@ -26,6 +26,7 @@ router.get('/new', (req, res) => {
 router.post('/', validateTrail, catchAsync(async(req, res) => {
     const trail = new Trail(req.body.trail);
     await trail.save();
+    req.flash('success', 'Successfully made a new Trail')
     res.redirect(`/trails/${trail._id}`)
 
 }))
@@ -43,12 +44,14 @@ router.get('/:id/edit', catchAsync(async(req, res) => {
 router.put('/:id', validateTrail, catchAsync(async(req, res) => {
     const { id } = req.params;
     const trail = await Trail.findByIdAndUpdate(id, {...req.body.trail })
+    req.flash('success', 'Successfully Updated Trail')
     res.redirect(`/trails/${trail._id}`)
 }))
 
 router.delete('/:id', catchAsync(async(req, res) => {
     const { id } = req.params;
     await Trail.findByIdAndDelete(id);
+    req.flash('success', 'Sucessfully Deleted Trail')
     res.redirect('/trails')
 }))
 
