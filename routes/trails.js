@@ -32,7 +32,10 @@ router.post('/', validateTrail, catchAsync(async(req, res) => {
 }))
 router.get('/:id', catchAsync(async(req, res) => {
     const trail = await Trail.findById(req.params.id).populate('reviews');
-
+    if (!trail) {
+        req.flash('error', 'Trail not found')
+        return res.redirect('/trails');
+    }
     res.render('trails/show', { trail });
 }))
 
